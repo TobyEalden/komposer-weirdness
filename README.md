@@ -1,1 +1,2 @@
-# komposer-weirdness
+# komposer behaviour
+
