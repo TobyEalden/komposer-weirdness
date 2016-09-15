@@ -6,9 +6,9 @@ class MyComponent extends React.Component {
     this.props.onUpdate();
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   return nextProps.c1Data !== this.props.c1Data;
-  // }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.c1Data !== this.props.c1Data;
+  }
 
   render() {
     console.log("MyComponent rendering: %d",this.props.c1Data);
@@ -26,16 +26,19 @@ MyComponent.propTypes = {
 }
 
 function composer1({ c2Data },onData) {
-  console.log("composer1 running, data from c2 is %d",c2Data);
-  setTimeout(function() {
-    c2Data++;
-    console.log("composer1 ready, sending %d",c2Data);
-    onData(null,{ c1Data: c2Data });
-  },2000);
+  if (c2Data) {
+    console.log("composer1 running, data from c2 is %d",c2Data);  
+    setTimeout(function() {
+      c2Data++;
+      console.log("composer1 ready, sending %d",c2Data);
+      onData(null,{ c1Data: c2Data });
+    },2000);
+  }
 }
 
 function composer2({ appData },onData) {
   console.log("composer2 running, data from app is %d",appData);
+  onData(null,{c2Data: null});
   setTimeout(function() {
     appData++;
     console.log("composer2 ready, sending %d",appData);
